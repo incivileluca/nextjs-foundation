@@ -1,8 +1,10 @@
+//this was only created to be executed once to seed the database, could removed
 import bcrypt from 'bcrypt';
 import postgres from 'postgres';
+
 import { invoices, customers, revenue, users } from '../lib/placeholder-data';
 
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
+const sql = postgres(process.env.POSTGRES_URL!, { username: process.env.PGUSER!, password: process.env.PGPASSWORD!, ssl: 'require' });
 
 async function seedUsers() {
   await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
@@ -100,7 +102,8 @@ async function seedRevenue() {
 
   return insertedRevenue;
 }
-
+/*
+removed because should not be publiclly accessible
 export async function GET() {
   try {
     const result = await sql.begin((sql) => [
@@ -115,3 +118,4 @@ export async function GET() {
     return Response.json({ error }, { status: 500 });
   }
 }
+*/
